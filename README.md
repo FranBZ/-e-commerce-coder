@@ -32,7 +32,7 @@ ejs, que contenga el id y el detalle completo
 proporcionará uno para hacer las pruebas necesarias.
 
 
-**Piezas sugeridas**
+**Piezas sugeridas**<br>
 _Te recomendamos incluir:_
 - Node.js
 - MongoDB
@@ -44,7 +44,7 @@ _Te recomendamos incluir:_
 - Handlebars, Pug, Ejs
 - Nodemailer
 
-*Requisitos base*
+*Requisitos base*<br>
 Los requisitos base serán parte de los criterios de evaluación para aprobar
 el proyecto.
 - Inicio: Al momento de requerir la ruta base ‘/’
@@ -115,8 +115,8 @@ a utilizar será Websockets. El servidor implementará una vista, utilizando
 handlebars, para visualizar todos los mensajes y poder responder
 individualmente a ellos, eligiendo el email de respuesta.
 
-*Requisitos Extra*
-Los requisitos extra pro-coders no se incluyen en los criterios de evaluación.
+*Requisitos Extra*<br>
+Los requisitos extra pro-coders no se incluyen en los criterios de evaluación.<br>
 Los requisitos extra son funcionalidades opcionales que no se incluyen en los
 criterios de evaluación, pero si te falta diversión y quieres agregar valor a turoyecto... ¡bajo la única condición de que lo que incluyas debe funcionar!
 - auth/login: Implementar alguna de las estrategias de autenticación
@@ -129,7 +129,7 @@ Las selecciones serán detalladas en el checkout. Por ejemplo: 1 x camisa
 - Mis órdenes: El usuario podrá visualizar todas las órdenes que realizó a
 través de la ruta /orden.
 
-*Dont’s*
+*Dont’s*<br>
 _No es necesario ni recomendado._
 - Crear un administrador de stock, dado que puede escaparse del scope y
 requerir bastante trabajo extra. Podremos gestionar el stock desde la base
