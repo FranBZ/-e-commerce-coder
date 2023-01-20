@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+    <body>
+        <%- include('partials/nav') %>
+        <div class='container mt-5'>
+            <div class='row'>
+                <h1>LOGUEARSE</h1>
+                <form action="/login" method="post">
+                    <input 
+                        type="email" 
+                        class="form-control mb-2" 
+                        placeholder="Ingrese su email"
+                        name="email"
+                    >
+                    <input 
+                        type="password" 
+                        class="form-control mb-2" 
+                        placeholder="Ingrese su contraseña"
+                        name="password"
+                    >
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+    <body>
+        <%- include('partials/nav') %>
+
+        <div class='container mt-5'>
+            <div class='row'>
+                <h1>REGISTRO</h1>
+                <form action="/register" method="post">
+                    <input 
+                        type="text" 
+                        class="form-control mb-2" 
+                        placeholder="Nombre"
+                        name="name"
+                    >
+                    <input 
+                        type="number" 
+                        class="form-control mb-2" 
+                        placeholder="Numero telefonico"
+                        name="number"
+                    >
+                    <input 
+                        type="email" 
+                        class="form-control mb-2" 
+                        placeholder="Email"
+                        name="email"
+                    >
+                    <input 
+                        type="password" 
+                        class="form-control mb-2" 
+                        placeholder="Contraseña"
+                        name="password"
+                    >
+                    <input 
+                        type="password" 
+                        class="form-control mb-2" 
+                        placeholder="Repetir la contraseña"
+                        name="password2"
+                    >
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

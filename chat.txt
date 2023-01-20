@@ -1,0 +1,22 @@
+[
+  {
+    "usuario": "Fran",
+    "fecha": "17/1/2023 16:8:55",
+    "mensaje": "Hola soporte"
+  },
+  {
+    "usuario": "Soporte",
+    "fecha": "17/1/2023 16:9:26",
+    "mensaje": "Que onda perrin? que te anda pasando?"
+  },
+  {
+    "usuario": "Fran",
+    "fecha": "17/1/2023 16:9:36",
+    "mensaje": "Ta buena tu pag"
+  },
+  {
+    "usuario": "Soporte",
+    "fecha": "17/1/2023 16:9:45",
+    "mensaje": "Lo se rey, algo mas?"
+  }
+]
