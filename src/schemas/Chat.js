@@ -7,7 +7,7 @@ const { Schema, model } = require('mongoose')
 const chatCollection = 'chat'
 
 const chatSchema = new Schema({
-    user: {
+    email: {
         type: String,
         require: true
     },

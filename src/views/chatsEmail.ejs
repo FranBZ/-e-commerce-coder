@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+    <body>
+        <%- include('partials/nav') %>
+        <div class='container mt-5'>
+            <div class='row'>
+                <div style="width:100vw">
+                    <span class="fw-bold" style="color: orangered;">Este es tu historial de mensajes:</span>
+                </div>
+                <% chatsEmail.forEach(message => { %>
+                    <div style="width:100vw">
+                        <span class="fw-bold" style="color: blue;"><%= message.email %></span>
+                        <span style="color: brown;">&nbsp[<%= message.date %>]</span>
+                        <span class="fst-italic" style="color: green;">&nbsp: <%= message.message %></span>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </body>
+</html>

@@ -6,7 +6,7 @@ buttonChat?.addEventListener("click", () => {
     const d = new Date()
     const date = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
     const data = {
-        user: document.getElementById("user").value,
+        email: document.getElementById("email").value,
         date: date,
         message: document.getElementById("message").value
     }
@@ -19,7 +19,7 @@ socket.on('server_all_menssage', chat => {
     chat.forEach(message => {
         document.getElementById('chat').innerHTML += `
             <div style="width:100vw">
-                <span class="fw-bold" style="color: blue;">${message.user}</span>
+                <span class="fw-bold" style="color: blue;">${message.email}</span>
                 <span style="color: brown;">&nbsp[${message.date}]</span>
                 <span class="fst-italic" style="color: green;">&nbsp: ${message.message}</span>
             </div>

@@ -27,10 +27,10 @@ class ChatService extends MongoConteiner {
 
     async insertMessage(data) {
 
-        const { user, date, message } = data
+        const { email, date, message } = data
 
         try {
-            const newMessage = new Chat({ user, date, message})
+            const newMessage = new Chat({ email, date, message})
             await super.save(newMessage)
         } catch (error) {
             throw new Error('Error al insertar mensaje chat', error)

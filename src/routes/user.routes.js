@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const { signin, signup, getUsers } = require('../controller/user.controller.js')
 const { verifyToken } = require('../middlewares/validateToken.js')
+const { showChatByEmail } = require('../utils/showChatByEmail.js')
 
 const userRouter = Router()
 
@@ -13,7 +14,8 @@ userRouter.get('/register', (req, res) => res.render('register'))
 userRouter.post('/register', signup)
 
 // Soporte
-userRouter.get('/suport', (req, res) => res.render('chatSuport'))
+userRouter.get('/chat', (req, res) => res.render('chatSuport'))
+userRouter.get('/chat/:email', showChatByEmail)
 
 // Users
 userRouter.get('/users', verifyToken, getUsers)
