@@ -2,9 +2,9 @@ const express = require('express')
 const { Server: HTTPserver } = require('http')
 const { Server: IOserver } = require('socket.io')
 const userRouter = require('./routes/user.routes.js')
-const { leerChat, insertarChat } = require('./utils/chat.js')
 const { join } = require('path')
 const { verifyToken } = require('./middlewares/validateToken.js')
+const ChatService = require('./services/chatService.js')
 
 const app = express()
 const http = new HTTPserver(app)
@@ -30,13 +30,15 @@ app.use('/cart', verifyToken, cartRouter) */
 // Socket
 io.on('connection', async socket => {
     console.log('a user conected')
+    
+    const chatService = ChatService.getInstance()
+    const chatINFO = await chatService.readChat()
 
-    const chatINFO = await leerChat()
     socket.emit('server_all_menssage', chatINFO)
 
     socket.on('client_new_message', async data => {
-        await insertarChat(data)
-        io.sockets.emit('server_all_menssage', await leerChat())
+        await chatService.insertMessage(data)
+        io.sockets.emit('server_all_menssage', await chatService.readChat())
     })
 })
 

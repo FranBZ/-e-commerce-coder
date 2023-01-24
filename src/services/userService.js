@@ -13,10 +13,9 @@ class UserService extends MongoConteiner {
     }
 
     static getInstance() {
-        if (UserService.instance) {
-            return UserService.instance;
+        if (!UserService.instance) {
+            UserService.instance = new UserService();
         }
-        UserService.instance = new UserService();
         return UserService.instance;
     }
 

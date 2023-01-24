@@ -16,6 +16,6 @@ userRouter.post('/register', signup)
 userRouter.get('/suport', (req, res) => res.render('chatSuport'))
 
 // Users
-userRouter.get('users', verifyToken, getUsers)
+userRouter.get('/users', verifyToken, getUsers)
 
 module.exports = userRouter
