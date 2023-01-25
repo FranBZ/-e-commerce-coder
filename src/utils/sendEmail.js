@@ -1,6 +1,6 @@
 const { createTransport } = require('nodemailer')
 
-const buyEmail = async (pedido, usuario) => {
+const buyEmail = async (order, user) => {
     const transporter = createTransport({
         service: 'gmail',
         port: 587,
@@ -10,11 +10,11 @@ const buyEmail = async (pedido, usuario) => {
         }
     })
 
-    let body = pedido.reduce((acu, ped) => {
+    let body = order.reduce((acu, product) => {
         acu += `   <tr>
-                        <td> ${ped.name} </td>
-                        <td> ${ped.description} </td>
-                        <td> ${ped.price} </td>
+                        <td> ${product.name} </td>
+                        <td> ${product.description} </td>
+                        <td> ${product.price} </td>
                     </tr>`
         return acu
     }, '')
@@ -22,7 +22,7 @@ const buyEmail = async (pedido, usuario) => {
     const mailOptions = {
         from: `Nodemailer - ${process.env.TEST_MAIL}`,
         to: process.env.TEST_MAIL,
-        subject: `Nuevo pedido de: ${usuario}`,
+        subject: `Nuevo pedido de: ${user}`,
         html: ` <table>
                     <thead>
                         <th>Producto</th>
@@ -40,7 +40,7 @@ const buyEmail = async (pedido, usuario) => {
     }
 }
 
-const registerEmail = async usuario => {
+const registerEmail = async user => {
     const transporter = createTransport({
         service: 'gmail',
         port: 587,
@@ -55,9 +55,10 @@ const registerEmail = async usuario => {
         to: process.env.TEST_MAIL,
         subject: `Nuevo usuario registrado`,
         html: `<h1>Se ha registrado un nuevo usuario - datos:
-                <h3>Nombre: ${usuario.name}</h3>
-                <h3>Email: ${usuario.email}</h3>
-                <h3>Telefono: ${usuario.number}</h3>`,
+                <h3>Nombre: ${user.name}</h3>
+                <h3>Email: ${user.email}</h3>
+                <h3>Telefono: ${user.number}</h3>
+                <h3>Rol: ${user.role}</h3>`,
     }
 
     try {

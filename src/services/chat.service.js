@@ -21,7 +21,7 @@ class ChatService extends MongoConteiner {
             const chatInfo = await super.getAll()
             return chatInfo
         } catch (error) {
-            throw new Error('Error al leer chat', error)
+            res.render("error", { status: '404', error: `Error al leer el chat ${error}`})
         }
     }
 
@@ -33,7 +33,7 @@ class ChatService extends MongoConteiner {
             const newMessage = new Chat({ email, date, message})
             await super.save(newMessage)
         } catch (error) {
-            throw new Error('Error al insertar mensaje chat', error)
+            res.render("error", { status: '404', error: `Error al insertar el mensaje ${error}`})
         }
     }
 }

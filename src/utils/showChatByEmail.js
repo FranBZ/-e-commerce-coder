@@ -1,4 +1,4 @@
-const ChatService = require('../services/chatService.js')
+const ChatService = require('../services/chat.service.js')
 const chatService = ChatService.getInstance()
 
 const showChatByEmail = async (req, res) => {

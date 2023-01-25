@@ -23,6 +23,10 @@ const userSchema = Schema({
     password: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        require: true
     }
 }, {
     timestamps: false,

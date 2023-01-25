@@ -21,31 +21,31 @@ class UserService extends MongoConteiner {
 
     async signup(req, res) { // registrando usuario
 
-        const { name, number, email, password, password2 } = req.body
+        const { name, number, email, password, password2, role } = req.body
 
         try {
-            if (!name && !number && !email && !password && !password2) return res.redirect("/error")
-            if (password !== password2) return res.redirect("/error")
+            if (!name && !number && !email && !password && !password2 && !role) return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
+            if (password !== password2) return res.render("error", { status: '400', error: 'Las contraseñas no coinciden'})
 
             // Comprobando que no exista el mail
             const users = await super.getAll()
             let userFound = users.find(user => user.email == email)
 
-            if (userFound) return res.redirect("/error")
+            if (userFound) return res.render("error", { status: '400', error: 'Este usuario ya existe'})
 
             // Guardando el usuario
-            const newUser = new User({ name, number, email, password })
+            const newUser = new User({ name, number, email, password, role })
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(password, salt);
             newUser.password = hashPassword
             await super.save(newUser)
 
-            registerEmail({ name, email, number })
+            registerEmail({ name, email, number, role })
 
             return res.redirect("/")
 
         } catch (error) {
-            res.status(400).json({ error: `${error}` })
+            res.render("error", { status: '404', error: `Error al registrarse ${error}`})
         }
 
     }
@@ -56,27 +56,27 @@ class UserService extends MongoConteiner {
 
         try {
             if (!email && !password) {
-                return res.redirect("/error")
+                return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
             }
 
             // Comprobando que exista el mail
             const users = await super.getAll()
             let user = users.find(user => user.email == email)
-            if (!user) return res.status(400).redirect("/error")
+            if (!user) return res.render("error", { status: '400', error: 'Email y/o contraseña incorrectos'})
 
             // Validando contraseña
             const validPassword = await bcrypt.compare(password, user.password);
-            if (!validPassword) return res.status(400).redirect("/error")
+            if (!validPassword) return res.render("error", { status: '400', error: 'Email y/o contraseña incorrectos'})
 
             // Creacion y steo de token
             const token = jwt.sign({
                 id: user._id
-            }, process.env.JWT_SECRET, { expiresIn: '10m' })
+            }, process.env.JWT_SECRET, { expiresIn: process.env.EXPIRATION_TIME_JWT })
 
             res.header('auth-token', token).json({ token })
 
         } catch (error) {
-            res.status(400).json({ error: `${error}` })
+            res.render("error", { status: '404', error: `Error al loguearse ${error}`})
         }
 
     }
@@ -89,14 +89,32 @@ class UserService extends MongoConteiner {
                 const user = await super.getById(id)
                 res.status(200).send(user)
             } catch (error) {
-                res.status(400).json({ message: `usuario con id no encontrado ${id}` })
+                res.render("error", { status: '404', error: `Error al obtener el usuario por ID ${error}`})
             }
         } else {
             try {
                 const users = await super.getAll()
                 res.status(200).send(users)
             } catch (error) {
-                res.status(400).json({ message: `error al listar usuarios` })
+                res.render("error", { status: '404', error: `Error al obtener los usuarios ${error}`})
+            }
+        }
+    }
+
+    async returnUsers(id) {
+        if (id) {
+            try {
+                const user = await super.getById(id)
+                return user
+            } catch (error) {
+                res.render("error", { status: '404', error: `Error al retirnar usuario por ID ${error}`})
+            }
+        } else {
+            try {
+                const users = await super.getAll()
+                return users
+            } catch (error) {
+                res.render("error", { status: '404', error: `Error al retornar los usuarios ${error}`})
             }
         }
     }
