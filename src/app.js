@@ -5,6 +5,7 @@ const { Server: IOserver } = require('socket.io')
 const userRouter = require('./routes/user.routes.js')
 const chatRouter = require('./routes/chat.routes.js')
 const authRouter = require('./routes/auth.routes.js')
+const productRouter = require('./routes/product.routes')
 
 const ChatService = require('./services/chat.service.js')
 const UserService = require('./services/user.service.js')
@@ -31,9 +32,8 @@ app.use(express.static(join(__dirname, 'public')))
 app.use('/', authRouter)
 app.use('/chat', chatRouter)
 app.use('/users', userRouter)
-
-/* app.use('/products', verifyToken, productsRouter)
-app.use('/cart', verifyToken, cartRouter) */
+app.use('/products', productRouter)
+app.use('/cart', cartRouter)
 
 // Socket
 io.on('connection', async socket => {

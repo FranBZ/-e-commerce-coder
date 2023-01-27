@@ -24,7 +24,7 @@ class UserService extends MongoConteiner {
         const { name, number, email, password, password2, role } = req.body
 
         try {
-            if (!name && !number && !email && !password && !password2 && !role) return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
+            if (!name || !number || !email || !password || !password2 || !role) return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
             if (password !== password2) return res.render("error", { status: '400', error: 'Las contraseñas no coinciden'})
 
             // Comprobando que no exista el mail
@@ -55,7 +55,7 @@ class UserService extends MongoConteiner {
         const { email, password } = req.body
 
         try {
-            if (!email && !password) {
+            if (!email || !password) {
                 return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
             }
 

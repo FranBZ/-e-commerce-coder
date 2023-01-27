@@ -1,7 +1,6 @@
 const UserService = require('../services/user.service.js')
 const userService = UserService.getInstance()
 
-// Registrando usuario
 const signup = async (req, res) => {
     try {
         await userService.signup(req, res)
@@ -10,7 +9,6 @@ const signup = async (req, res) => {
     }
 }
 
-// Logueando usuario
 const signin = async (req, res) => {
     try {
         await userService.signin(req, res)
@@ -19,7 +17,6 @@ const signin = async (req, res) => {
     }
 }
 
-// Funcion para obtener todos los usuarios
 const getUsers = async (req, res) => {
     try {
         await userService.getUsers(req, res)
