@@ -112,18 +112,16 @@ class ProductService extends MongoConteiner {
     async deleteProductById(req, res) {  // Elimina un producto segun su ID
 
         const { id } = req.params
-        
+
         if (id) {
             try {
                 const product = await super.getById(id)
                 if (product) {
                     await super.deleteById(id)
                     res.status(200).json({ messaje: 'Producto borrado con exito' })
-                } else {
-                    res.status(400).json({ error: 'No existe un producto con ese ID' })
                 }
             } catch (error) {
-                res.status(400).json({ error: `${error}` })
+                res.status(400).json({ error: `No se pudo borrar el producto - ${error}` })
             }
         } else {
             res.status(400).json({ error: 'Es necesario proporcionar un ID' })

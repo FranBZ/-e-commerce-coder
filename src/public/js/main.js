@@ -3,15 +3,25 @@ const socket = io.connect()
 const buttonChat = document.getElementById("send")
 
 buttonChat?.addEventListener("click", () => {
-    const d = new Date()
-    const date = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
-    const data = {
-        email: document.getElementById("email").value,
-        date: date,
-        message: document.getElementById("message").value
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (regex.test(document.getElementById("email").value)) {
+        if (document.getElementById('message').value) {
+            const d = new Date()
+            const date = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+            const data = {
+                email: document.getElementById("email").value,
+                date: date,
+                message: document.getElementById("message").value
+            }
+            document.getElementById('message').value = ''
+            socket.emit('client_new_message', data)
+        } else {
+            document.getElementById('message').value = 'Debes escribir un mensaje'
+        }
+    } else {
+        document.getElementById('email').value = 'Debes insertar un Email valido'
     }
-    document.getElementById('message').value = ''
-    socket.emit('client_new_message', data)
+
 })
 
 socket.on('server_all_menssage', data => {

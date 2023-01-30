@@ -18,7 +18,7 @@ class MongoConteiner {
                 return data
             }
         } catch (error) {
-            throw new Error(`Error al listar por id: ${error}`)
+            throw new Error(`${error}`)
         }
     }
 
@@ -49,7 +49,7 @@ class MongoConteiner {
                 return obj
             }
         } catch (error) {
-            throw new Error(`Error al actualizar: ${error}`)
+            throw new Error(`${error}`)
         }
     }
 
@@ -60,7 +60,7 @@ class MongoConteiner {
                 throw new Error('Error al borrar: no encontrado')
             }
         } catch (error) {
-            throw new Error(`Error al borrar: ${error}`)
+            throw new Error(`${error}`)
         }
     }
 }

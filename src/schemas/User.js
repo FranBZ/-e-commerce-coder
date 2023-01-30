@@ -16,6 +16,10 @@ const userSchema = Schema({
         type: String,
         required: true
     },
+    adresse: {
+        type: String,
+        require: true
+    },
     email: {
         type: String,
         require: true

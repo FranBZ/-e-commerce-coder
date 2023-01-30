@@ -5,16 +5,15 @@ const { Server: IOserver } = require('socket.io')
 const userRouter = require('./routes/user.routes.js')
 const chatRouter = require('./routes/chat.routes.js')
 const authRouter = require('./routes/auth.routes.js')
-const productRouter = require('./routes/product.routes')
-
-const ChatService = require('./services/chat.service.js')
-const UserService = require('./services/user.service.js')
+const productRouter = require('./routes/product.routes.js')
+const cartRouter = require('./routes/cart.routes.js')
 
 const { join } = require('path')
 
 const app = express()
 const http = new HTTPserver(app)
 const io = new IOserver(http)
+module.exports = { io }
 
 const PORT = process.env.PORT
 
@@ -36,25 +35,7 @@ app.use('/products', productRouter)
 app.use('/cart', cartRouter)
 
 // Socket
-io.on('connection', async socket => {
-    console.log('a user conected')
-
-    const userService = UserService.getInstance()
-    const usersINFO = await userService.returnUsers()
-    
-    const chatService = ChatService.getInstance()
-    const chat = await chatService.readChat()
-
-    socket.emit('server_all_menssage', { chat, usersINFO })
-
-    socket.on('client_new_message', async data => {
-        const userService = UserService.getInstance()
-        const usersINFO = await userService.returnUsers()
-        await chatService.insertMessage(data)
-        const chat = await chatService.readChat()
-        io.sockets.emit('server_all_menssage', { chat, usersINFO })
-    })
-})
+require('./config/socket.js')
 
 // Inicio
 const main = http.listen(PORT, () => {

@@ -21,10 +21,10 @@ class UserService extends MongoConteiner {
 
     async signup(req, res) { // registrando usuario
 
-        const { name, number, email, password, password2, role } = req.body
+        const { name, number, adresse, email, password, password2, role } = req.body
 
         try {
-            if (!name || !number || !email || !password || !password2 || !role) return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
+            if (!name || !number || !email || !adresse || !password || !password2 || !role) return res.render("error", { status: '400', error: 'Debe completar todos los campos'})
             if (password !== password2) return res.render("error", { status: '400', error: 'Las contraseñas no coinciden'})
 
             // Comprobando que no exista el mail
@@ -34,13 +34,13 @@ class UserService extends MongoConteiner {
             if (userFound) return res.render("error", { status: '400', error: 'Este usuario ya existe'})
 
             // Guardando el usuario
-            const newUser = new User({ name, number, email, password, role })
+            const newUser = new User({ name, number, adresse, email, password, role })
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(password, salt);
             newUser.password = hashPassword
             await super.save(newUser)
 
-            registerEmail({ name, email, number, role })
+            registerEmail({ name, email, adresse, number, role })
 
             return res.redirect("/")
 

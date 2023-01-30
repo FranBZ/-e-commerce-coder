@@ -4,6 +4,9 @@ const { Cart } = require('../schemas/Cart.js')
 const ProductService = require('../services/product.service.js')
 const productService = ProductService.getInstance()
 
+const UserService = require('../services/user.service.js')
+const userService = UserService.getInstance()
+
 class CartService extends MongoConteiner {
 
     static instance
@@ -46,7 +49,8 @@ class CartService extends MongoConteiner {
 
         if (userId) {
             try {
-                const info = await super.save({ products: [], userId })
+                const user = await userService.getById(userId)
+                const info = await super.save({ products: [], email: user[0].email, adresse: user[0].adresse })
                 res.send(info)
             } catch (error) {
                 res.status(400).json({ error: `Error al intentar guardar el carrito - ${error}` })
@@ -77,7 +81,7 @@ class CartService extends MongoConteiner {
         }
     }
 
-    async getProductsFromCart(req, res) { // Esta funcion muestra todos los productos de un carrito
+    async getProductsFromCart(req, res) { // Muestra todos los productos de un carrito
 
         const { id } = req.params
 
@@ -101,10 +105,21 @@ class CartService extends MongoConteiner {
             try {
                 const cart = await super.getById(idCart)
                 if (cart) {
-                    let product = await productService.getById(idProd)
-                    cart[0].products.push(product[0])
-                    await super.updateById(cart[0])
-                    res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
+
+                    // Comprobamos si el producto ya se encuentra en eel carrito
+                    const productIndex = cart[0].products.findIndex(prod => prod.product._id == idProd)
+
+                    if (productIndex != -1) { // En caso de encontrarlo aumentamos la cantidad en una unidad
+                        cart[0].products[productIndex].amount++
+                        await super.updateById(cart[0])
+                        res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
+
+                    } else { // En caso de no encontrarlo solicitamos el producto a la base de datos y lo agregamos al carrito
+                        const product = await productService.getById(idProd)
+                        cart[0].products.push({ amount: 1, product: product[0] })
+                        await super.updateById(cart[0])
+                        res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
+                    }
                 } else {
                     res.status(400).json({ error: 'No existe carrito con este ID' })
                 }
@@ -124,11 +139,21 @@ class CartService extends MongoConteiner {
             try {
                 const cart = await super.getById(idCart)
                 if (cart) {
-                    const productIndex = cart[0].products.findIndex(product => product._id == idProd)
-                    if (productIndex != -1) {
-                        cart[0].products.splice(productIndex, 1)
-                        await super.updateById(cart[0])
-                        res.status(200).json({ messaje: 'Producto borrado con éxito' })
+
+                    // Comprobamos si el producto ya se encuentra en el carrito
+                    const productIndex = cart[0].products.findIndex(prod => prod.product._id == idProd)
+
+                    if (productIndex != -1) { // En caso que se encuentre y la cantidad sea mayor a 1 descontamos una unidad a la cantidad
+                        if (cart[0].products[productIndex].amount > 1) {
+                            cart[0].products[productIndex].amount--
+                            await super.updateById(cart[0])
+                            res.status(200).json({ messaje: 'Producto borrado con éxito' })
+
+                        } else { // En caso que se encuentre y la cantidad sea 1, eliminamos el producto
+                            cart[0].products.splice(productIndex, 1)
+                            await super.updateById(cart[0])
+                            res.status(200).json({ messaje: 'Producto borrado con éxito' })
+                        }
                     } else {
                         res.status(400).json({ error: 'Este producto no se encuentra en el carrito' })
                     }
