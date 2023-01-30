@@ -26,27 +26,31 @@ class ProductService extends MongoConteiner {
     }
 
     async getProductById(req, res) { // Devuelve un producto por su ID
+
         const { id } = req.params
-        try {
-            if (id) {
+
+        if (id) {
+            try {
                 const product = await super.getById(id)
                 if (product) {
                     res.status(200).send(product)
                 } else {
                     res.status(400).json({ error: 'No existe un producto con ese ID' })
                 }
-            } else {
-                res.status(400).json({ error: 'Es necesario proporcionar un ID' })
+            } catch (error) {
+                res.status(404).json({ error: `Error al consultar producto por id - ${error}` })
             }
-        } catch (error) {
-            res.status(404).json({ error: `Error al consultar producto por id - ${error}` })
+        } else {
+            res.status(400).json({ error: 'Es necesario proporcionar un ID' })
         }
     }
 
     async getProductByCategory(req, res) {  // Devuelve todos los productos que pertenezcan a una misma categoria
+
         const { type } = req.params
-        try {
-            if (type) {
+
+        if (type) {
+            try {
                 const allProducts = await super.getAll()
                 const productsByCategory = allProducts.filter(product => product.category == type)
                 if (productsByCategory.length == 0) {
@@ -54,11 +58,11 @@ class ProductService extends MongoConteiner {
                 } else {
                     res.status(200).send(productsByCategory)
                 }
-            } else {
-                res.status(400).json({ error: 'Es necesario proporcionar una categoria' })
+            } catch (error) {
+                res.status(404).json({ error: `Error al consultar productos por categoria - ${error}` })
             }
-        } catch (error) {
-            res.status(404).json({ error: `Error al consultar productos por categoria - ${error}` })
+        } else {
+            res.status(400).json({ error: 'Es necesario proporcionar una categoria' })
         }
     }
 
@@ -66,18 +70,15 @@ class ProductService extends MongoConteiner {
 
         const { name, price, urlImage, description, category } = req.body
 
-        if (!name || !price || !urlImage || !description || !category) {
-            res.status(400).json({ message: 'Por favor ingrese todos los datos del producto' })
-        } else {
-
-            const product = req.body
+        if (name && price && urlImage && description && category) {
             try {
-                await super.save(product)
+                await super.save({ name, price, urlImage, description, category })
                 res.status(201).json({ messaje: 'Producto creado con exito' })
             } catch (error) {
                 res.status(400).json({ error: `Error al crear un producto - ${error}` })
             }
-
+        } else {
+            res.status(400).json({ message: 'Por favor ingrese todos los datos del producto' })
         }
     }
 
@@ -86,13 +87,10 @@ class ProductService extends MongoConteiner {
         const { id } = req.params
         const { name, price, urlImage, description, category } = req.body
 
-        if (!name || !price || !urlImage || !description || !category) {
-            res.status(400).json({ error: 'Por favor ingrese todos los datos del producto para poder actualizarlo' })
-        } else {
+        if (name && price && urlImage && description && category && id) {
             try {
                 const product = await super.getById(id)
                 if (product) {
-                    product[0]
                     product[0].name = name
                     product[0].price = price
                     product[0].urlImage = urlImage
@@ -106,23 +104,29 @@ class ProductService extends MongoConteiner {
             } catch (error) {
                 res.status(400).json({ error: `Error al intentar actualizar el producto - ${error}` })
             }
+        } else {
+            res.status(400).json({ error: 'Por favor ingrese todos los datos del producto para poder actualizarlo' })
         }
-
     }
 
     async deleteProductById(req, res) {  // Elimina un producto segun su ID
 
         const { id } = req.params
-        try {
-            const product = await super.getById(id)
-            if (product) {
-                await super.deleteById(id)
-                res.status(200).json({ messaje: 'Producto borrado con exito' })
-            } else {
-                res.status(400).json({ error: 'No existe un producto con ese ID' })
+        
+        if (id) {
+            try {
+                const product = await super.getById(id)
+                if (product) {
+                    await super.deleteById(id)
+                    res.status(200).json({ messaje: 'Producto borrado con exito' })
+                } else {
+                    res.status(400).json({ error: 'No existe un producto con ese ID' })
+                }
+            } catch (error) {
+                res.status(400).json({ error: `${error}` })
             }
-        } catch (error) {
-            res.status(400).json({ error: `${error}` })
+        } else {
+            res.status(400).json({ error: 'Es necesario proporcionar un ID' })
         }
     }
 

@@ -21,7 +21,9 @@ class CartService extends MongoConteiner {
     }
 
     async getCartById(req, res) {  // Devuelve un carrito por su ID
+
         const { id } = req.params
+
         if (id) {
             try {
                 const cart = await super.getById(id)
@@ -39,7 +41,9 @@ class CartService extends MongoConteiner {
     }
 
     async saveCart(req, res) {  // Guarda un carrito y devuelve su informacion
+
         const { userId } = req.params
+
         if (userId) {
             try {
                 const info = await super.save({ products: [], userId })
@@ -53,7 +57,9 @@ class CartService extends MongoConteiner {
     }
 
     async deleteCartById(req, res) {   // Elimina un carrito segun su ID
+
         const { id } = req.params
+
         if (id) {
             try {
                 const cart = await super.getById(id)
@@ -72,7 +78,9 @@ class CartService extends MongoConteiner {
     }
 
     async getProductsFromCart(req, res) { // Esta funcion muestra todos los productos de un carrito
+
         const { id } = req.params
+
         if (id) {
             try {
                 const cart = await super.getById(id)
@@ -86,13 +94,15 @@ class CartService extends MongoConteiner {
     }
 
     async saveProductInCartByID(req, res) { // Esta funcion guarda un producto en un carrito
+
         const { idCart, idProd } = req.params
+
         if (idCart && idProd) {
             try {
                 const cart = await super.getById(idCart)
                 if (cart) {
-                    let prod = await prodCollection.getById(idProd)
-                    cart[0].products.push(prod[0])
+                    let product = await productService.getById(idProd)
+                    cart[0].products.push(product[0])
                     await super.updateById(cart[0])
                     res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
                 } else {
@@ -107,14 +117,16 @@ class CartService extends MongoConteiner {
     }
 
     async deleteProductFromCartByID(req, res) { // Esta funcion borra un producto de un carrito
+
         const { idCart, idProd } = req.params
+
         if (idCart, idProd) {
             try {
                 const cart = await super.getById(idCart)
                 if (cart) {
-                    const prodIndex = cart[0].products.findIndex(product => product._id == idProd)
-                    if (prodIndex != -1) {
-                        cart[0].products.splice(prodIndex, 1)
+                    const productIndex = cart[0].products.findIndex(product => product._id == idProd)
+                    if (productIndex != -1) {
+                        cart[0].products.splice(productIndex, 1)
                         await super.updateById(cart[0])
                         res.status(200).json({ messaje: 'Producto borrado con éxito' })
                     } else {
