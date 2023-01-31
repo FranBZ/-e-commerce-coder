@@ -135,3 +135,29 @@ _No es necesario ni recomendado._
 requerir bastante trabajo extra. Podremos gestionar el stock desde la base
 MongoDB.
 - Implementar el FrontEnd salvo que así sea deseado por parte del estudiante.
+
+## Como ejecutar el proyecto en tu pc
+- Antes que nada debes tener instalado en tu pc node.js, debes tener una cuenta en mognodb atlas, y una cuenta de gmail configurada con contraseñas para aplicacion
+para poder testear los emails
+- Debes clonar el repositorio
+- Abrir una terminal y en ella dirigirte a la carpeta con el nombre del proyecto
+- Ejecutar el comando ``` npm install ```
+- Deves configurar un archivo ``` .env ``` con los siguientes datos
+    ```
+    PORT = < numero de puerto >
+
+    MONGO_USER = "< usuario de mongo atlas >"
+    MONGO_PASS = "< contraseña de mongo atlas >"
+    MONGO_ATLAS_ENDPOINT = "< @cluster0.aaa111.mongodb.net/ >"
+
+    TEST_MAIL = "< cuenta de gmail para los test >"
+    TEST_MAIL_PASS = "< password que brinda gmail para utilizar el servicio >"
+
+    JWT_SECRET = "< palabra secreta para sifrar los token >"
+    EXPIRATION_TIME_JWT = "< tiempo de expiracion deseada para los token >"
+    ```
+- Una vez finalizado el punto anterior, ejecutar el comando ``` npm run start ```
+- Luego puedes tu programa favorito para testear los diferentes endpoints
+
+## Proyecto Online
+- El proyecto se encuntra funcionando en URL del proyecto
