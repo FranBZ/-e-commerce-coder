@@ -14,7 +14,7 @@ const {
 
 const dbsConfig = {
     mongodbAtlas: {
-        uri: 'mongodb://0.0.0.0:27017/ecommerce', //`mongodb+srv://${MONGO_USER}:${encodeURIComponent(MONGO_PASS)}${MONGO_ATLAS_ENDPOINT}`,
+        uri: `mongodb+srv://${MONGO_USER}:${encodeURIComponent(MONGO_PASS)}${MONGO_ATLAS_ENDPOINT}`,
         options: {
             useNewUrlParser: true,
             useUnifiedTopology: true

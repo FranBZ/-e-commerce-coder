@@ -50,8 +50,7 @@ class OrderService extends MongoConteiner {
         if (id) {
             try {
                 const cart = await cartService.getById(id)
-                const orderService = OrderService.getInstance()
-                const orders = await orderService.getAll()
+                const orders = await this.returnOrders()
                 const order = await super.save({
                     items: cart[0].products,
                     orderNumber: orders.length + 1,
@@ -66,6 +65,24 @@ class OrderService extends MongoConteiner {
             }
         } else {
             res.status(400).json({ error: 'Debe proporcionar un ID' })
+        }
+    }
+
+    async returnOrders(id) {
+        if (id) {
+            try {
+                const order = await super.getById(id)
+                return order
+            } catch (error) {
+                res.status(400).json({ error: `Error al listar las ordenes - ${error}` })
+            }
+        } else {
+            try {
+                const orders = await super.getAll()
+                return orders
+            } catch (error) {
+                res.status(400).json({ error: `Error al listar las ordenes - ${error}` })
+            }
         }
     }
 }

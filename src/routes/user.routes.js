@@ -1,10 +1,9 @@
 const { Router } = require('express')
 const { getUsers } = require('../controllers/user.controller.js')
-const { verifyToken } = require('../middlewares/validateToken.js')
 
 const userRouter = Router()
 
-// Users
+// Esta ruta devuleve todos los usuarios (es necesario un toquen validado para consultar esta ruta)
 userRouter.get('/:id?', getUsers)
 
 module.exports = userRouter

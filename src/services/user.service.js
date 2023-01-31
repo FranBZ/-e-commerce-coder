@@ -100,6 +100,26 @@ class UserService extends MongoConteiner {
             }
         }
     }
+
+    // Funcion que retorna usuario por ID o todos los usuarios - Se utiliza para cuando queremos retornar informacion
+    async returnUsers(id) {
+
+        if (id) {
+            try {
+                const user = await super.getById()
+                return user
+            } catch (error) {
+                res.render("error", { status: '404', error: `Error al obtener usuario por id ${error}` })
+            }
+        } else {
+            try {
+                const users = await super.getAll()
+                return users
+            } catch (error) {
+                res.render("error", { status: '404', error: `Error al obtener los usuarios ${error}` })
+            }
+        }
+    }
 }
 
 module.exports = UserService
