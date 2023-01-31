@@ -1,5 +1,6 @@
 const { Router } = require('express')
-const { 
+const {
+    getCartById, 
     saveCart, 
     deleteCartById, 
     getProductsFromCart, 
@@ -9,7 +10,8 @@ const {
 
 const cartRouter = Router()
 
-//* El router base '/api/carrito' implementará tres rutas disponibles para usuarios y administradores:
+// Esta ruta devuelve un carrito por su ID (es necesario un token valido para consultar esta ruta)
+cartRouter.get('/:id', getCartById)
 
 // Se debe proporcionar un ID de cliente al cual se le asignara un carrito, esta ruta devuelve el ID de carrito (ese necesario un token validado para consultar esta ruta)
 cartRouter.post('/:userId', saveCart)

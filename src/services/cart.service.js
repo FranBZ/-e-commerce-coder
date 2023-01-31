@@ -30,11 +30,7 @@ class CartService extends MongoConteiner {
         if (id) {
             try {
                 const cart = await super.getById(id)
-                if (cart) {
-                    res.status(200).send(cart)
-                } else {
-                    res.status(400).json({ error: 'No existe un carrito con ese ID' })
-                }
+                res.status(200).send(cart)
             } catch (error) {
                 res.status(400).json({ error: `Error al consultar carrito por ID - ${error}` })
             }
@@ -66,13 +62,9 @@ class CartService extends MongoConteiner {
 
         if (id) {
             try {
-                const cart = await super.getById(id)
-                if (cart) {
-                    await super.deleteById(id)
-                    res.status(200).json({ mesagge: 'Carrito borrado con exito' })
-                } else {
-                    res.status(400).json({ error: 'No existe un carrito con ese ID' })
-                }
+                await super.getById(id)
+                await super.deleteById(id)
+                res.status(200).json({ mesagge: 'Carrito borrado con exito' })
             } catch (error) {
                 res.status(400).json({ error: `Error al borrar carrito por ID${error}` })
             }
@@ -104,25 +96,22 @@ class CartService extends MongoConteiner {
         if (idCart && idProd) {
             try {
                 const cart = await super.getById(idCart)
-                if (cart) {
 
-                    // Comprobamos si el producto ya se encuentra en eel carrito
-                    const productIndex = cart[0].products.findIndex(prod => prod.product._id == idProd)
+                // Comprobamos si el producto ya se encuentra en eel carrito
+                const productIndex = cart[0].products.findIndex(prod => prod.product._id == idProd)
 
-                    if (productIndex != -1) { // En caso de encontrarlo aumentamos la cantidad en una unidad
-                        cart[0].products[productIndex].amount++
-                        await super.updateById(cart[0])
-                        res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
+                if (productIndex != -1) { // En caso de encontrarlo aumentamos la cantidad en una unidad
+                    cart[0].products[productIndex].amount++
+                    await super.updateById(cart[0])
+                    res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
 
-                    } else { // En caso de no encontrarlo solicitamos el producto a la base de datos y lo agregamos al carrito
-                        const product = await productService.getById(idProd)
-                        cart[0].products.push({ amount: 1, product: product[0] })
-                        await super.updateById(cart[0])
-                        res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
-                    }
-                } else {
-                    res.status(400).json({ error: 'No existe carrito con este ID' })
+                } else { // En caso de no encontrarlo solicitamos el producto a la base de datos y lo agregamos al carrito
+                    const product = await productService.getById(idProd)
+                    cart[0].products.push({ amount: 1, product: product[0] })
+                    await super.updateById(cart[0])
+                    res.status(200).json({ messaje: 'Productos agregados con exito al carrito' })
                 }
+
             } catch (error) {
                 res.status(400).json({ error: `No se pudo guardar el producto en el carrito - ${error}` })
             }
@@ -138,24 +127,20 @@ class CartService extends MongoConteiner {
         if (idCart, idProd) {
             try {
                 const cart = await super.getById(idCart)
-                if (cart) {
 
-                    // Comprobamos si el producto ya se encuentra en el carrito
-                    const productIndex = cart[0].products.findIndex(prod => prod.product._id == idProd)
+                // Comprobamos si el producto ya se encuentra en el carrito
+                const productIndex = cart[0].products.findIndex(prod => prod.product._id == idProd)
 
-                    if (productIndex != -1) { // En caso que se encuentre y la cantidad sea mayor a 1 descontamos una unidad a la cantidad
-                        if (cart[0].products[productIndex].amount > 1) {
-                            cart[0].products[productIndex].amount--
-                            await super.updateById(cart[0])
-                            res.status(200).json({ messaje: 'Producto borrado con éxito' })
+                if (productIndex != -1) { // En caso que se encuentre y la cantidad sea mayor a 1 descontamos una unidad a la cantidad
+                    if (cart[0].products[productIndex].amount > 1) {
+                        cart[0].products[productIndex].amount--
+                        await super.updateById(cart[0])
+                        res.status(200).json({ messaje: 'Producto borrado con éxito' })
 
-                        } else { // En caso que se encuentre y la cantidad sea 1, eliminamos el producto
-                            cart[0].products.splice(productIndex, 1)
-                            await super.updateById(cart[0])
-                            res.status(200).json({ messaje: 'Producto borrado con éxito' })
-                        }
-                    } else {
-                        res.status(400).json({ error: 'Este producto no se encuentra en el carrito' })
+                    } else { // En caso que se encuentre y la cantidad sea 1, eliminamos el producto
+                        cart[0].products.splice(productIndex, 1)
+                        await super.updateById(cart[0])
+                        res.status(200).json({ messaje: 'Producto borrado con éxito' })
                     }
                 } else {
                     res.status(400).json({ error: 'No existe carrito con este ID' })

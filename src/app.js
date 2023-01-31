@@ -7,6 +7,7 @@ const chatRouter = require('./routes/chat.routes.js')
 const authRouter = require('./routes/auth.routes.js')
 const productRouter = require('./routes/product.routes.js')
 const cartRouter = require('./routes/cart.routes.js')
+const orderRouter = require('./routes/order.routes.js') 
 
 const { join } = require('path')
 
@@ -33,6 +34,7 @@ app.use('/chat', chatRouter)
 app.use('/users', userRouter)
 app.use('/products', productRouter)
 app.use('/cart', cartRouter)
+app.use('/order', orderRouter)
 
 // Socket
 require('./config/socket.js')

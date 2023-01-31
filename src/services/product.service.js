@@ -32,11 +32,7 @@ class ProductService extends MongoConteiner {
         if (id) {
             try {
                 const product = await super.getById(id)
-                if (product) {
-                    res.status(200).send(product)
-                } else {
-                    res.status(400).json({ error: 'No existe un producto con ese ID' })
-                }
+                res.status(200).send(product)
             } catch (error) {
                 res.status(404).json({ error: `Error al consultar producto por id - ${error}` })
             }
@@ -90,17 +86,13 @@ class ProductService extends MongoConteiner {
         if (name && price && urlImage && description && category && id) {
             try {
                 const product = await super.getById(id)
-                if (product) {
-                    product[0].name = name
-                    product[0].price = price
-                    product[0].urlImage = urlImage
-                    product[0].description = description
-                    product[0].category = category
-                    await super.updateById(product[0])
-                    res.status(201).json({ messaje: 'Producto actualizado con exito' })
-                } else {
-                    res.status(400).json({ error: 'No se ha encontrado un producto con ese ID' })
-                }
+                product[0].name = name
+                product[0].price = price
+                product[0].urlImage = urlImage
+                product[0].description = description
+                product[0].category = category
+                await super.updateById(product[0])
+                res.status(201).json({ messaje: 'Producto actualizado con exito' })
             } catch (error) {
                 res.status(400).json({ error: `Error al intentar actualizar el producto - ${error}` })
             }
@@ -115,11 +107,10 @@ class ProductService extends MongoConteiner {
 
         if (id) {
             try {
-                const product = await super.getById(id)
-                if (product) {
-                    await super.deleteById(id)
-                    res.status(200).json({ messaje: 'Producto borrado con exito' })
-                }
+                await super.getById(id)
+                await super.deleteById(id)
+                res.status(200).json({ messaje: 'Producto borrado con exito' })
+
             } catch (error) {
                 res.status(400).json({ error: `No se pudo borrar el producto - ${error}` })
             }

@@ -1,6 +1,6 @@
 const { createTransport } = require('nodemailer')
 
-const buyEmail = async (order, user) => {
+const buyEmail = async (order) => {
     const transporter = createTransport({
         service: 'gmail',
         port: 587,
@@ -9,12 +9,20 @@ const buyEmail = async (order, user) => {
             pass: process.env.TEST_MAIL_PASS
         }
     })
+    const items = order.items
 
-    let body = order.reduce((acu, product) => {
+    let productAmount = 0
+    let total = 0
+
+    let body = items.reduce((acu, product) => {
+        productAmount += product.amount
+        total += product.amount * product.product.price
         acu += `   <tr>
-                        <td> ${product.name} </td>
-                        <td> ${product.description} </td>
-                        <td> ${product.price} </td>
+                        <td> ${product.amount} </td>
+                        <td> ${product.product.name} </td>
+                        <td> ${product.product.description} </td>
+                        <td> $${product.product.price} </td>
+                        <td> $${product.amount * product.product.price} </td>
                     </tr>`
         return acu
     }, '')
@@ -22,12 +30,19 @@ const buyEmail = async (order, user) => {
     const mailOptions = {
         from: `Nodemailer - ${process.env.TEST_MAIL}`,
         to: process.env.TEST_MAIL,
-        subject: `Nuevo pedido de: ${user}`,
-        html: ` <table>
+        subject: `Nuevo pedido de: ${order.email}`,
+        html: ` <h2>Pedido de ${order.email}</h2>
+                <h4>N° de orden: ${order.orderNumber}</h4>
+                <h4>Dirección: ${order.adresse}</h4>
+                <h5>Cantidad de articulos: ${productAmount}</h5>
+                <h5>Monto total del pedido: $${total}</h5>
+                <table>
                     <thead>
+                        <th>Cantidad</th>
                         <th>Producto</th>
                         <th>Descripcion</th>
                         <th>Precio</th>
+                        <th>Parcial</th>
                     </thead>
                     <tbody>${body}</tbody>
                 </table>`,
@@ -58,6 +73,7 @@ const registerEmail = async user => {
                 <h3>Nombre: ${user.name}</h3>
                 <h3>Email: ${user.email}</h3>
                 <h3>Telefono: ${user.number}</h3>
+                <h3>Dirección: ${user.adresse}</h3>
                 <h3>Rol: ${user.role}</h3>`,
     }
 
