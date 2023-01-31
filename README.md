@@ -157,7 +157,7 @@ para poder testear los emails
     EXPIRATION_TIME_JWT = "< tiempo de expiracion deseada para los token >"
     ```
 - Una vez finalizado el punto anterior, ejecutar el comando ``` npm run start ```
-- Luego puedes tu programa favorito para testear los diferentes endpoints
+- Luego puedes utilizar tu programa favorito para testear los diferentes endpoints
 
 ## Proyecto Online
 - El proyecto se encuntra funcionando en URL del proyecto
