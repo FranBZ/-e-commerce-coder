@@ -4,6 +4,7 @@
   "description": "Desarrollarás el backend de una aplicación de e-commerce para poder vender\r productos de un rubro a elección.",
   "main": "index.js",
   "scripts": {
+    "start": "node src/app.js",
     "development": "set NODE_ENV=development&& node src/app.js",
     "production": "set NODE_ENV=production&& nodemon src/app.js"
   },

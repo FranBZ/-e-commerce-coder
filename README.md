@@ -156,7 +156,7 @@ para poder testear los emails
     JWT_SECRET = "< palabra secreta para sifrar los token >"
     EXPIRATION_TIME_JWT = "< tiempo de expiracion deseada para los token >"
     ```
-- Una vez finalizado el punto anterior, ejecutar el comando ``` npm run start ```
+- Una vez finalizado el punto anterior, ejecutar el comando ``` npm run development ``` para modo desarrollo
 - Luego puedes utilizar tu programa favorito para testear los diferentes endpoints
 
 ## Proyecto Online
