@@ -10,7 +10,11 @@ const cartRouter = require('./routes/cart.routes.js')
 const orderRouter = require('./routes/order.routes.js')
 
 const { verifyToken } = require('./middlewares/veryfyToken.js')
-const { join } = require('path')
+const { join, resolve } = require('path')
+
+require('dotenv').config({
+    path: resolve(join(__dirname, '../'), process.env.NODE_ENV + '.env')
+})
 
 const app = express()
 const http = new HTTPserver(app)

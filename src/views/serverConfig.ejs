@@ -5,25 +5,41 @@
         <%- include('partials/nav') %>
         <div class='container mt-5'>
             <div class='row'>
-                <h2 style="color: brown;">Descripcion de las diferentes variable externas que deberas de configurar para poder ejecutar el proyecto</h2>
+                <h2 style="color: brown;">Descripción de las diferentes variable externas que deberás de configurar para poder ejecutar el proyecto</h2>
+                <hr>
                 <section>
-                    <div><b>PORT =</b> Numero de puerto de escucha</div>
+                    <div>Antes que nada el proyecto cuenta con 2 scripts para su ejecución, uno para entorno de desarrollo y otro para entorno de producción.</div>
+                    <div>Deberás configurar un archivo "development.env" y uno "production.env" con las variables que se describen a continuación</div>
                 </section>
+                <hr>
                 <section>
-                    <h4 style="color: blue;"> EL proyecto utiliza mongodb Atlas para su funcionamiento, por lo que deberas configurar:</h4>
+                    <h4 style="color: blue;"> Puerto:</h4>
+                    <div><b>PORT =</b> Número de puerto de escucha</div>
+                </section>
+                <hr>
+                <section>
+                    <h4 style="color: blue;"> EL proyecto utiliza mongodb Atlas para su funcionamiento, por lo que deberás configurar:</h4>
                     <div><b>MONGO_USER =</b> Usuario de mongo Atlas</div>
                     <div><b>MONGO_PASS =</b> Contraseña de mongo atlas</div>
                     <div><b>MONGO_ATLAS_ENDPOINT =</b> Endpoint de mongo atlas ej: "@cluster0.11111111.mongodb.net/ecommerce"</div>
                 </section>
+                <hr>
                 <section>
-                    <h4 style="color: blue;">Tambien necesitaras generar una contraseña de aplicacion de correo de google para los avisos que se envian al mail</h4>
-                    <div><b>TEST_MAIL =</b> Email que se utilizara para enviar y recibir los mails</div>
+                    <h4 style="color: blue;">También necesitarás generar una contraseña de aplicación de correo de google para los avisos que se envían al mail</h4>
+                    <div><b>TEST_MAIL =</b> Email que se utilizará para envíar y recibir los emails</div>
                     <div><b>TEST_MAIL_PASS =</b> Contraseña de aplicaciones otorgada por google</div>
                 </section>
+                <hr>
                 <section>
-                    <h4 style="color: blue;">Por ultimo, la aplicacion utiliza Jeson Web Token para poder ingresar a las rutas, por lo cual deberás configurar:</h4>
-                    <div><b>JWT_SECRET =</b> palabra secreta para sifrar los JWT</div>
-                    <div><b>EXPIRATION_TIME_JWT =</b> Tiempo de expiracion de losm JWT</div>
+                    <h4 style="color: blue;">Por último, la aplicación utiliza Json Web Tokens para poder ingresar a las rutas, por lo cual deberás configurar:</h4>
+                    <div><b>JWT_SECRET =</b> Contraseña para cifrar los JWT</div>
+                    <div><b>EXPIRATION_TIME_JWT =</b> Tiempo de expiración de los JWT</div>
+                </section>
+                <hr>
+                <section>
+                    <h4 style="color: brown;">Scripts de ejecución</h2>
+                    <div><b>npm run development</b></div>
+                    <div><b>npm run production</b></div>
                 </section>
             </div>
         </div>
