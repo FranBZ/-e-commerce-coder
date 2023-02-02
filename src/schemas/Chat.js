@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose')
-
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ CONFIGURACION DEL MODELO NECESARIO PARA PERCISTENCIA DE Los chats EN MONGODB +
++ CONFIGURACION DEL MODELO NECESARIO PARA PERCISTENCIA DE LOS CHATS EN MONGODB +
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+const { Schema, model } = require('mongoose')
 
 const chatCollection = 'chat'
 

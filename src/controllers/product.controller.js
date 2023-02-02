@@ -1,3 +1,7 @@
+/* +++++++++++++++++++++++++++++++++
++  Controladores de los productos  +
++++++++++++++++++++++++++++++++++++*/
+
 const ProductService = require('../services/product.service.js')
 const productService = ProductService.getInstance()
 

@@ -1,3 +1,7 @@
+/* ++++++++++++++++++
++  Avisos por mail  +
+++++++++++++++++++++*/
+
 const { createTransport } = require('nodemailer')
 
 const buyEmail = async (order) => {
@@ -9,12 +13,13 @@ const buyEmail = async (order) => {
             pass: process.env.TEST_MAIL_PASS
         }
     })
-    const items = order.items
+    const items = order.items  // Obtenemos los items
 
     let productAmount = 0
     let total = 0
 
-    let body = items.reduce((acu, product) => {
+    // Creamos el cuerpo de filas de los productos para insertar en la tabla
+    let body = items.reduce((acu, product) => { 
         productAmount += product.amount
         total += product.amount * product.product.price
         acu += `   <tr>
@@ -27,6 +32,7 @@ const buyEmail = async (order) => {
         return acu
     }, '')
 
+    // Creamos las opciones de mail e insertamos el cuerpo de filas en la tabla
     const mailOptions = {
         from: `Nodemailer - ${process.env.TEST_MAIL}`,
         to: process.env.TEST_MAIL,
@@ -65,6 +71,7 @@ const registerEmail = async user => {
         }
     })
 
+    // Creamos las opciones de mail con los datos del usuario
     const mailOptions = {
         from: `Nodemailer - ${process.env.TEST_MAIL}`,
         to: process.env.TEST_MAIL,

@@ -1,3 +1,7 @@
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ CONFIGURACION DEL MODELO NECESARIO PARA PERCISTENCIA DE LAS ORDENES EN MONGODB +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 const { Schema, model } = require('mongoose')
 
 const orderCollection = 'order'

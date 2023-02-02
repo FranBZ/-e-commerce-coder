@@ -1,3 +1,7 @@
+/* +++++++++++++++++++
++  Servicio de Chat  +
++++++++++++++++++++++*/
+
 const { Chat } = require('../schemas/Chat.js')
 const MongoConteiner = require('../database/mongo.js')
 
@@ -16,7 +20,7 @@ class ChatService extends MongoConteiner {
         return ChatService.instance
     }
 
-    async readChat() {
+    async readChat() { // Lee todo los mensajes y los devuelve
         try {
             const chatInfo = await super.getAll()
             return chatInfo
@@ -25,7 +29,7 @@ class ChatService extends MongoConteiner {
         }
     }
 
-    async insertMessage(data) {
+    async insertMessage(data) { // Guarda un mensaje
 
         const { email, date, message } = data
 

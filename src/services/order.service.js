@@ -1,3 +1,7 @@
+/* ++++++++++++++++++++++
++  Servicio de Ordenes  +
+++++++++++++++++++++++++*/
+
 const MongoConteiner = require('../database/mongo.js')
 const { Order } = require('../schemas/Order.js')
 
@@ -21,7 +25,7 @@ class OrderService extends MongoConteiner {
         return OrderService.instance
     }
 
-    async getOrders(req, res) {
+    async getOrders(req, res) { // Devuelve todas las ordenes
         try {
             const orders = await super.getAll()
             res.status(200).send(orders)
@@ -30,7 +34,7 @@ class OrderService extends MongoConteiner {
         }
     }
 
-    async getOrderById(req, res) {
+    async getOrderById(req, res) {  // Devuelve una orden por su ID
         const { id } = req.params
         if (id) {
             try {
@@ -44,21 +48,21 @@ class OrderService extends MongoConteiner {
         }
     }
 
-    async generateOrder(req, res) {
+    async generateOrder(req, res) {  // Genera una orden
         const { id } = req.params
 
         if (id) {
             try {
-                const cart = await cartService.getById(id)
-                const orders = await this.returnOrders()
-                const order = await super.save({
+                const cart = await cartService.getById(id) // Comprueba si existe el carrito
+                const orders = await this.returnOrders() // Retorna las ordenes para poder saber la cantidad existentes
+                const order = await super.save({  // Guardamos la orden en la DB
                     items: cart[0].products,
                     orderNumber: orders.length + 1,
                     email: cart[0].email,
                     adresse: cart[0].adresse
                 })
-                await buyEmail(order)
-                await cartService.deleteById(id)
+                await buyEmail(order)  // Enviamos el mail de aviso de orden generada
+                await cartService.deleteById(id)  // Eliminamos el carrito al que pertenece la orden
                 res.status(200).json({ message: `orden generada con exito` })
             } catch (error) {
                 res.status(400).json({ error: `Error al generar la orden ${error}` })

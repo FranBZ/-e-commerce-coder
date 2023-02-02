@@ -1,3 +1,7 @@
+/* +++++++++++++++++++++++++
++  Rutas de los productos  +
++++++++++++++++++++++++++++*/
+
 const { Router } = require('express')
 const {
     getProducts, 

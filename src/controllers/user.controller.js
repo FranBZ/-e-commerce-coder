@@ -1,3 +1,7 @@
+/* ++++++++++++++++++++++++++++++++
++  Controladores de los usuarios  +
+++++++++++++++++++++++++++++++++++*/
+
 const UserService = require('../services/user.service.js')
 const userService = UserService.getInstance()
 

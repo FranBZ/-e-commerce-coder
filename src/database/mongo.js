@@ -1,3 +1,7 @@
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
++  Servicio de comunicación con la base de datos Mongo  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 const mongoose = require('mongoose')
 const { dbsConfig } = require('../config/dbsConnect.js')
 

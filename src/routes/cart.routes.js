@@ -1,3 +1,7 @@
+/* ++++++++++++++++++++
++  Rutas del carrito  +
+++++++++++++++++++++++*/
+
 const { Router } = require('express')
 const {
     getCartById, 

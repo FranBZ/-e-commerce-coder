@@ -12,15 +12,18 @@ const orderRouter = require('./routes/order.routes.js')
 const { verifyToken } = require('./middlewares/veryfyToken.js')
 const { join, resolve } = require('path')
 
+// Configuración del ambiente que vamos a utilizar
 require('dotenv').config({
     path: resolve(join(__dirname, '../'), process.env.NODE_ENV + '.env')
 })
 
+// Servidor
 const app = express()
 const http = new HTTPserver(app)
 const io = new IOserver(http)
 module.exports = { io }
 
+// DPuerto
 const PORT = process.env.PORT
 
 // Configuracion
@@ -45,7 +48,7 @@ app.use('/server', (req, res) => res.render('serverConfig'))
 // Socket
 require('./config/socket.js')
 
-// Inicio
+// Inicio de la app
 const main = http.listen(PORT, () => {
     console.log('Servidor on - port', PORT)
 })

@@ -1,3 +1,7 @@
+/* ++++++++++++++++++++++++
++  Servicio de Productos  +
+++++++++++++++++++++++++++*/
+
 const { Product } = require('../schemas/Product.js')
 const MongoConteiner = require('../database/mongo.js')
 

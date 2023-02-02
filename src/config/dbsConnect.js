@@ -13,6 +13,7 @@ const {
     MONGO_ATLAS_ENDPOINT,
 } = process.env
 
+// Si quieres agregar otro modo de persistencia deberás agregarlo al siguiente JSON
 const dbsConfig = {
     mongodbAtlas: {
         uri:  `mongodb+srv://${MONGO_USER}:${encodeURIComponent(MONGO_PASS)}${MONGO_ATLAS_ENDPOINT}`,

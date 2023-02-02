@@ -1,3 +1,7 @@
+/* +++++++++++++++++++++++++
++  Rutas de autenticación  +
++++++++++++++++++++++++++++*/
+
 const { Router } = require('express')
 const { signin, signup } = require('../controllers/user.controller.js')
 

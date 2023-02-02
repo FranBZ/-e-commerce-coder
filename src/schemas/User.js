@@ -1,9 +1,9 @@
-const { Schema, model } = require('mongoose')
-const bcrypt = require('bcrypt')
-
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 + CONFIGURACION DEL MODELO NECESARIO PARA PERCISTENCIA DE USUARIOS EN MONGODB +
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+const { Schema, model } = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const usersCollection = 'user'
 

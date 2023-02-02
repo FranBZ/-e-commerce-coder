@@ -1,3 +1,7 @@
+/* +++++++++++++++++++++++
++  Servicio de Usuarios  +
++++++++++++++++++++++++++*/
+
 const { User } = require('../schemas/User.js')
 const MongoConteiner = require('../database/mongo.js')
 const bcrypt = require('bcrypt')
@@ -40,7 +44,8 @@ class UserService extends MongoConteiner {
             newUser.password = hashPassword
             await super.save(newUser)
 
-            registerEmail({ name, email, adresse, number, role })
+            // Enviamos el mail de aviso de registro
+            await registerEmail({ name, email, adresse, number, role })
 
             return res.redirect("/")
 
@@ -68,7 +73,7 @@ class UserService extends MongoConteiner {
             const validPassword = await bcrypt.compare(password, user.password);
             if (!validPassword) return res.render("error", { status: '400', error: 'Email y/o contraseña incorrectos' })
 
-            // Creacion y steo de token
+            // Creacion y seteo de token
             const token = jwt.sign({
                 id: user._id
             }, process.env.JWT_SECRET, { expiresIn: process.env.EXPIRATION_TIME_JWT })

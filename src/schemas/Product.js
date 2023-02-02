@@ -1,3 +1,7 @@
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ CONFIGURACION DEL MODELO NECESARIO PARA PERCISTENCIA DE LOS PRODUCTOS EN MONGODB +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 const { Schema, model } = require("mongoose")
 
 const productsCollection = "products"

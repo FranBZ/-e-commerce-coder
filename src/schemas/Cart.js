@@ -1,3 +1,7 @@
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ CONFIGURACION DEL MODELO NECESARIO PARA PERCISTENCIA DE LOS CARRITOS EN MONGODB +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 const { Schema, model } = require("mongoose")
 
 const cartCollection = 'carts'

@@ -1,3 +1,7 @@
+/* ++++++++++++++++++++++++
++  Rutas de los usuarios  +
+++++++++++++++++++++++++++*/
+
 const { Router } = require('express')
 const { getUsers } = require('../controllers/user.controller.js')
 
