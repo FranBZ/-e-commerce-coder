@@ -160,4 +160,4 @@ para poder testear los emails
 - Luego puedes utilizar tu programa favorito para testear los diferentes endpoints
 
 ## Proyecto Online
-- El proyecto se encuntra funcionando en URL del proyecto
+- El proyecto se encuntra funcionando en la siguiente [URL](https://e-commerce-coder-production.up.railway.app/)
